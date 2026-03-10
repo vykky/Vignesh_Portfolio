@@ -83,7 +83,7 @@ body::after {
 .nav-list a {
   font-size: .65rem; font-weight: 400; letter-spacing: .22em;
   text-transform: uppercase; color: var(--text-2);
-  position: relative; padding-bottom: 3px;
+  position: relative; padding: 6px 0 6px;
   transition: color .3s;
 }
 .nav-list a::after {
@@ -94,6 +94,13 @@ body::after {
 }
 .nav-list a:hover { color: var(--gold-hi); }
 .nav-list a:hover::after { width: 100%; }
+.nav-list a.active {
+  color: var(--gold-hi);
+}
+.nav-list a.active::after { width: 100%; }
+/* Nav fade on scroll */
+#nav { transition: padding .4s ease, background .4s ease, border-color .4s ease, opacity .35s ease; }
+#nav.hide { opacity: 0; pointer-events: none; }
 
 /* ═══════════════════════════════════════
    HERO
@@ -386,7 +393,8 @@ body::after {
 .stat:hover::after { opacity: 1; }
 .stat-n {
   font-family: 'Bodoni Moda', serif;
-  font-size: 2.8rem; font-weight: 300; color: var(--gold-hi); line-height: 1; margin-bottom: 6px;
+  font-size: 2.8rem; font-weight: 400; color: var(--gold-hi); line-height: 1; margin-bottom: 6px;
+  letter-spacing: -.01em;
 }
 .stat-l {
   font-size: .6rem; font-weight: 400; letter-spacing: .16em;
@@ -722,34 +730,139 @@ footer {
    RESPONSIVE
 ═══════════════════════════════════════ */
 @media (max-width: 960px) {
-  #nav { padding: 22px 30px; }
-  #nav.stuck { padding: 16px 30px; }
+  /* ── NAV MOBILE ── */
+  #nav { padding: 18px 24px; }
+  #nav.stuck { padding: 14px 24px; }
   .nav-list { display: none; }
+  .nav-brand { font-size: 1.6rem; }
 
+  /* ── HERO MOBILE ── */
   #hero { grid-template-columns: 1fr; min-height: auto; }
   .hero-vline { display: none; }
   .hero-photo-col {
-    height: auto; padding: 0 30px 80px;
-    order: -1; padding-top: 110px;
+    height: auto; padding: 100px 24px 40px;
+    order: -1;
+    justify-content: center;
   }
-  .photo-frame { max-width: 300px; }
-  .hero-text { padding: 50px 30px 80px; }
+  .photo-frame { max-width: 260px; margin: 0 auto; }
+  .photo-dots { display: none; }
   .photo-tag { display: none; }
+  .hero-text {
+    padding: 30px 24px 80px;
+    align-items: center;
+    text-align: center;
+  }
+  .hero-eyebrow { justify-content: center; }
+  .hero-name { font-size: clamp(3.8rem, 18vw, 5.5rem); }
+  .hero-titles { justify-content: center; }
+  .hero-title-item { font-size: .72rem; font-weight: 400; letter-spacing: .14em; color: var(--plat); }
+  .wr-badge { margin: 0 auto 28px; }
+  .wr-badge-text { font-size: .65rem; font-weight: 500; }
+  .hero-tagline { font-size: 1.1rem; font-weight: 300; }
+  .hero-cta { font-size: .72rem; }
+  .hero-scroll { left: 50%; transform: translateX(-50%); }
 
-  .s-inner { padding: 80px 30px; }
-  .about-layout { grid-template-columns: 1fr; gap: 50px; }
-  .m-cards, .records-layout, .tech-cards, .impact-layout { grid-template-columns: 1fr; }
-  .rec-hero-card { grid-template-columns: 1fr; gap: 28px; }
+  /* ── SECTIONS MOBILE ── */
+  .s-inner { padding: 70px 24px; }
+  .s-title { font-size: clamp(1.8rem, 7vw, 2.6rem); margin-bottom: 36px; }
+  .s-chip { font-size: .62rem; }
+
+  /* ── ABOUT ── */
+  .about-layout { grid-template-columns: 1fr; gap: 44px; }
+  .about-body { font-size: 1.08rem; line-height: 1.85; font-weight: 300; }
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: 3px; }
+  .stat { padding: 26px 20px; }
+  .stat-n { font-size: 2.4rem; }
+  .stat-l { font-size: .65rem; font-weight: 500; letter-spacing: .1em; }
+
+  /* ── MILESTONE CARDS ── */
+  .m-cards { grid-template-columns: 1fr; }
+  .m-card { padding: 36px 28px; }
+  .m-card p { font-size: .95rem; line-height: 1.85; font-weight: 300; }
+  .m-tag { font-size: .62rem; font-weight: 600; letter-spacing: .18em; }
+
+  /* ── RECORDS ── */
+  .records-layout { grid-template-columns: 1fr; }
+  .rec-hero-card { grid-template-columns: 1fr; gap: 24px; padding: 36px 28px; }
+  .wr-big { font-size: 4rem; }
+  .rec-hero-text h3 { font-size: 1.3rem; }
+  .rec-hero-text p { font-size: .95rem; line-height: 1.85; }
+  .rec-card { padding: 32px 28px; }
+  .rec-card h3 { font-size: 1.2rem; }
+  .rec-card p { font-size: .95rem; line-height: 1.85; }
+  .rec-card-tag { font-size: .62rem; font-weight: 600; }
+
+  /* ── TECH ── */
+  .tech-cards { grid-template-columns: 1fr; }
+  .tc { padding: 36px 28px; }
+  .tc h3 { font-size: 1.25rem; }
+  .tc p { font-size: .95rem; line-height: 1.85; }
+  .tc-pill { font-size: .62rem; font-weight: 600; }
+
+  /* ── IMPACT ── */
+  .impact-layout { grid-template-columns: 1fr; gap: 40px; }
   .impact-left { position: static; }
-  .contact-inner { padding: 100px 30px; }
-  footer { padding: 22px 30px; }
-  .contact-links { flex-direction: column; gap: 14px; }
+  .impact-pull { font-size: 1.1rem; }
+  .ii { padding: 30px 24px; }
+  .ii h3 { font-size: 1.2rem; }
+  .ii p { font-size: .95rem; line-height: 1.85; }
+  .ii-label { font-size: .62rem; font-weight: 600; }
+
+  /* ── CONTACT ── */
+  .contact-inner { padding: 90px 24px; }
+  .contact-headline { font-size: clamp(1.3rem, 5vw, 1.8rem); }
+  .contact-links { flex-direction: column; gap: 14px; align-items: stretch; }
+  .c-btn { justify-content: center; font-size: .7rem; padding: 16px 24px; font-weight: 500; }
   .c-sep { display: none; }
+
+  /* ── FOOTER ── */
+  footer { padding: 20px 24px; flex-direction: column; gap: 8px; text-align: center; }
+  .f-brand { font-size: 1rem; }
+  .f-copy { font-size: .65rem; }
 }
 
   /* ── CUSTOM GOLD CURSOR ── */
   * { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M5 3l14 9-7 1-4 7z' fill='%23c8993f' stroke='%23e8c878' stroke-width='1'/%3E%3C/svg%3E") 4 2, auto !important; }
   a, button { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='10' fill='none' stroke='%23c8993f' stroke-width='2'/%3E%3Ccircle cx='14' cy='14' r='4' fill='%23e8c878'/%3E%3C/svg%3E") 14 14, pointer !important; }
+
+  /* ── HAMBURGER ── */
+  .nav-burger {
+    display: none;
+    flex-direction: column; gap: 5px;
+    background: none; border: none; padding: 6px;
+    z-index: 201;
+  }
+  .nav-burger span {
+    display: block; width: 26px; height: 2px;
+    background: var(--gold); border-radius: 2px;
+    transition: transform .3s ease, opacity .3s ease;
+  }
+  .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity: 0; }
+  .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width: 960px) {
+    .nav-burger { display: flex; }
+    #navList {
+      display: none !important;
+      flex-direction: column;
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(7,8,13,.97);
+      backdrop-filter: blur(20px);
+      align-items: center; justify-content: center;
+      gap: 36px; z-index: 200;
+    }
+    #navList.open {
+      display: flex !important;
+    }
+    #navList a {
+      font-size: 1.1rem !important; font-weight: 400;
+      letter-spacing: .25em; color: var(--plat) !important;
+      padding: 10px 0 !important;
+    }
+    #navList a.active, #navList a:hover { color: var(--gold-hi) !important; }
+    #navList a::after { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -759,7 +872,10 @@ footer {
 <!-- ── NAV ── -->
 <nav id="nav">
   <a href="#hero" class="nav-brand">V.</a>
-  <ul class="nav-list">
+  <button class="nav-burger" id="navBurger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-list" id="navList">
     <li><a href="#about">About</a></li>
     <li><a href="#milestones">Prestige</a></li>
     <li><a href="#records">Records</a></li>
@@ -1068,12 +1184,12 @@ footer {
       Open to strategic collaborations<br />and visionary projects.
     </p>
     <div class="contact-links rev d2">
-      <a href="mailto:vykkyvrisa@gmail.com" class="c-btn primary">
+      <a href="/cdn-cgi/l/email-protection#56202f3d3d2f20243f253716313b373f3a7835393b" class="c-btn primary">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <rect x="2" y="4" width="20" height="16" rx="2"/>
           <path d="m2 7 10 7 10-7"/>
         </svg>
-        vykkyvrisa@gmail.com
+        <span class="__cf_email__" data-cfemail="1a6c637171636c6873697b5a7d777b737634797577">[email&#160;protected]</span>
       </a>
       <span class="c-sep">·</span>
       <a href="https://www.linkedin.com/in/mvignesh10" target="_blank" rel="noopener" class="c-btn">
@@ -1097,7 +1213,7 @@ footer {
 <!-- ══════════════════════════════════════
      JAVASCRIPT
 ══════════════════════════════════════ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 
 
 // Ring follows with smooth lag
@@ -1114,9 +1230,36 @@ document.querySelectorAll('a, button').forEach(el => {
   el.addEventListener('mouseleave', () => document.body.classList.remove('hov'));
 });
 
-/* ── STICKY NAV ── */
+/* ── STICKY NAV + HIDE ON SCROLL DOWN + ACTIVE LINK ── */
 const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => nav.classList.toggle('stuck', scrollY > 60), {passive:true});
+let lastScroll = 0;
+
+window.addEventListener('scroll', () => {
+  const cur = window.scrollY;
+  // Stuck style
+  nav.classList.toggle('stuck', cur > 60);
+  // Hide on scroll down, show on scroll up
+  if (cur > 120) {
+    if (cur > lastScroll + 8) {
+      nav.classList.add('hide');
+    } else if (cur < lastScroll - 8) {
+      nav.classList.remove('hide');
+    }
+  } else {
+    nav.classList.remove('hide');
+  }
+  lastScroll = cur;
+
+  // Active nav link highlight
+  const sections = document.querySelectorAll('section[id]');
+  let current = '';
+  sections.forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 120) current = sec.getAttribute('id');
+  });
+  document.querySelectorAll('.nav-list a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+}, {passive:true});
 
 /* ── SCROLL REVEAL ── */
 const revEls = document.querySelectorAll('.rev');
@@ -1146,9 +1289,4 @@ if (heroPhoto && heroPhoto.src && heroPhoto.src !== window.location.href) {
   }
 }
 
-/* ── 3D CARD TILT ── */
-document.querySelectorAll('.m-card, .tc, .rec-card, .stat').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width  - .5;
-    const y = (e.clientY 
+/* ── 3D CARD TILT ── *
