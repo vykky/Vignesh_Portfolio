@@ -49,7 +49,7 @@ a { text-decoration: none; color: inherit; }
 /* ═══════════════════════════════════════
    CURSOR
 ═══════════════════════════════════════ */
-#cur-wrap { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; }
+#cur-wrap { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 999999; mix-blend-mode: normal; }
 #cur-ring {
   position: absolute;
   width: 40px; height: 40px;
@@ -239,13 +239,13 @@ body::after {
   position: relative; z-index: 2;
   height: 100vh;
   display: flex; align-items: center; justify-content: center;
-  padding: 80px 64px 80px 20px;
+  padding: 110px 64px 80px 20px;
   opacity: 0; animation: fadeIn 1.2s ease .6s forwards;
 }
 
 .photo-frame {
   position: relative;
-  width: 100%; max-width: 440px;
+  width: 100%; max-width: 340px;
 }
 
 /* decorative corners */
@@ -280,7 +280,7 @@ body::after {
 .photo-box {
   position: relative; z-index: 2;
   width: 100%;
-  aspect-ratio: 3/4;
+  aspect-ratio: 2/3;
   overflow: hidden;
   background: var(--ink-3);
   display: flex; align-items: center; justify-content: center;
@@ -772,7 +772,7 @@ footer {
 <body>
 
 <!-- ── CURSOR ── -->
-<div id="cur-wrap">
+<div id="cur-wrap" style="z-index:999999;position:fixed;top:0;left:0;pointer-events:none;">
   <div id="cur-ring"></div>
   <div id="cur-dot"></div>
 </div>
