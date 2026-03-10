@@ -36,12 +36,14 @@
 ═══════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 16px; }
+body, body * {
+  cursor: none !important;
+}
 body {
   font-family: 'DM Sans', sans-serif;
   background: var(--ink);
   color: var(--text);
   overflow-x: hidden;
-  cursor: none;
 }
 img { display: block; max-width: 100%; }
 a { text-decoration: none; color: inherit; }
@@ -49,24 +51,29 @@ a { text-decoration: none; color: inherit; }
 /* ═══════════════════════════════════════
    CURSOR
 ═══════════════════════════════════════ */
-#cur-wrap { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 999999; mix-blend-mode: normal; }
+#cur-wrap { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 999999; }
 #cur-ring {
   position: absolute;
-  width: 40px; height: 40px;
+  width: 38px; height: 38px;
   border-radius: 50%;
-  border: 1px solid rgba(200,153,63,0.55);
+  border: 2px solid var(--gold);
   transform: translate(-50%,-50%);
-  transition: width .35s ease, height .35s ease, border-color .35s ease, opacity .35s ease;
+  transition: width .3s ease, height .3s ease, border-color .3s ease;
+  box-shadow: 0 0 10px rgba(200,153,63,0.4), inset 0 0 10px rgba(200,153,63,0.05);
 }
 #cur-dot {
   position: absolute;
-  width: 5px; height: 5px;
+  width: 8px; height: 8px;
   border-radius: 50%;
   background: var(--gold-hi);
   transform: translate(-50%,-50%);
-  transition: transform .08s linear;
+  box-shadow: 0 0 8px var(--gold), 0 0 16px rgba(200,153,63,0.6);
 }
-body.hov #cur-ring { width: 60px; height: 60px; border-color: var(--gold-hi); }
+body.hov #cur-ring {
+  width: 56px; height: 56px;
+  border-color: var(--gold-hi);
+  box-shadow: 0 0 18px rgba(200,153,63,0.6), inset 0 0 18px rgba(200,153,63,0.08);
+}
 
 /* ═══════════════════════════════════════
    NOISE OVERLAY
@@ -1122,20 +1129,29 @@ footer {
 /* ── CURSOR ── */
 const cRing = document.getElementById('cur-ring');
 const cDot  = document.getElementById('cur-dot');
+const curWrap = document.getElementById('cur-wrap');
 let mx=0, my=0, rx=0, ry=0;
+
+// Show cursor wrap only after first mouse move
+curWrap.style.opacity = '0';
 
 document.addEventListener('mousemove', e => {
   mx = e.clientX; my = e.clientY;
+  curWrap.style.opacity = '1';
+  // Dot follows instantly
   cDot.style.left = mx + 'px';
   cDot.style.top  = my + 'px';
 });
+
+// Ring follows with smooth lag
 (function loop() {
-  rx += (mx - rx) * .13;
-  ry += (my - ry) * .13;
+  rx += (mx - rx) * .12;
+  ry += (my - ry) * .12;
   cRing.style.left = rx + 'px';
   cRing.style.top  = ry + 'px';
   requestAnimationFrame(loop);
 })();
+
 document.querySelectorAll('a, button').forEach(el => {
   el.addEventListener('mouseenter', () => document.body.classList.add('hov'));
   el.addEventListener('mouseleave', () => document.body.classList.remove('hov'));
