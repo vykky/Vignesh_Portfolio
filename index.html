@@ -36,9 +36,6 @@
 ═══════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 16px; }
-body, body * {
-  cursor: none !important;
-}
 body {
   font-family: 'DM Sans', sans-serif;
   background: var(--ink);
@@ -48,32 +45,7 @@ body {
 img { display: block; max-width: 100%; }
 a { text-decoration: none; color: inherit; }
 
-/* ═══════════════════════════════════════
-   CURSOR
-═══════════════════════════════════════ */
-#cur-wrap { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 999999; }
-#cur-ring {
-  position: absolute;
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  border: 2px solid var(--gold);
-  transform: translate(-50%,-50%);
-  transition: width .3s ease, height .3s ease, border-color .3s ease;
-  box-shadow: 0 0 10px rgba(200,153,63,0.4), inset 0 0 10px rgba(200,153,63,0.05);
-}
-#cur-dot {
-  position: absolute;
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--gold-hi);
-  transform: translate(-50%,-50%);
-  box-shadow: 0 0 8px var(--gold), 0 0 16px rgba(200,153,63,0.6);
-}
-body.hov #cur-ring {
-  width: 56px; height: 56px;
-  border-color: var(--gold-hi);
-  box-shadow: 0 0 18px rgba(200,153,63,0.6), inset 0 0 18px rgba(200,153,63,0.08);
-}
+
 
 /* ═══════════════════════════════════════
    NOISE OVERLAY
@@ -228,7 +200,7 @@ body::after {
   font-size: .68rem; font-weight: 500; letter-spacing: .22em;
   text-transform: uppercase;
   position: relative; overflow: hidden;
-  transition: color .4s ease; cursor: none;
+  transition: color .4s ease; 
   opacity: 0; animation: fadeUp .8s ease 1.25s forwards;
 }
 .hero-cta::before {
@@ -691,7 +663,7 @@ body::after {
   border: 1px solid var(--line);
   font-size: .66rem; font-weight: 400; letter-spacing: .22em;
   text-transform: uppercase; color: var(--plat-dim);
-  transition: color .3s, border-color .3s, background .3s; cursor: none;
+  transition: color .3s, border-color .3s, background .3s; 
 }
 .c-btn:hover { color: var(--gold-hi); border-color: var(--gold-lo); }
 .c-btn.primary {
@@ -774,15 +746,15 @@ footer {
   .contact-links { flex-direction: column; gap: 14px; }
   .c-sep { display: none; }
 }
+
+  /* ── CUSTOM GOLD CURSOR ── */
+  * { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M5 3l14 9-7 1-4 7z' fill='%23c8993f' stroke='%23e8c878' stroke-width='1'/%3E%3C/svg%3E") 4 2, auto !important; }
+  a, button { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='10' fill='none' stroke='%23c8993f' stroke-width='2'/%3E%3Ccircle cx='14' cy='14' r='4' fill='%23e8c878'/%3E%3C/svg%3E") 14 14, pointer !important; }
 </style>
 </head>
 <body>
 
-<!-- ── CURSOR ── -->
-<div id="cur-wrap" style="z-index:999999;position:fixed;top:0;left:0;pointer-events:none;">
-  <div id="cur-ring"></div>
-  <div id="cur-dot"></div>
-</div>
+
 
 <!-- ── NAV ── -->
 <nav id="nav">
@@ -1096,15 +1068,15 @@ footer {
       Open to strategic collaborations<br />and visionary projects.
     </p>
     <div class="contact-links rev d2">
-      <a href="/cdn-cgi/l/email-protection#9debe4f6f6e4ebeff4eefcddfaf0fcf4f1b3fef2f0" class="c-btn primary">
+      <a href="mailto:vykkyvrisa@gmail.com" class="c-btn primary">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <rect x="2" y="4" width="20" height="16" rx="2"/>
           <path d="m2 7 10 7 10-7"/>
         </svg>
-        <span class="__cf_email__" data-cfemail="b6c0cfddddcfc0c4dfc5d7f6d1dbd7dfda98d5d9db">[email&#160;protected]</span>
+        vykkyvrisa@gmail.com
       </a>
       <span class="c-sep">·</span>
-      <a href="https://linkedin.com" target="_blank" rel="noopener" class="c-btn">
+      <a href="https://www.linkedin.com/in/mvignesh10" target="_blank" rel="noopener" class="c-btn">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/>
           <rect x="2" y="9" width="4" height="12"/>
@@ -1126,22 +1098,7 @@ footer {
      JAVASCRIPT
 ══════════════════════════════════════ -->
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-/* ── CURSOR ── */
-const cRing = document.getElementById('cur-ring');
-const cDot  = document.getElementById('cur-dot');
-const curWrap = document.getElementById('cur-wrap');
-let mx=0, my=0, rx=0, ry=0;
 
-// Show cursor wrap only after first mouse move
-curWrap.style.opacity = '0';
-
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  curWrap.style.opacity = '1';
-  // Dot follows instantly
-  cDot.style.left = mx + 'px';
-  cDot.style.top  = my + 'px';
-});
 
 // Ring follows with smooth lag
 (function loop() {
