@@ -99,8 +99,8 @@ body::after {
 }
 .nav-list a.active::after { width: 100%; }
 /* Nav fade on scroll */
-#nav { transition: padding .4s ease, background .4s ease, border-color .4s ease, opacity .35s ease; }
-#nav.hide { opacity: 0; pointer-events: none; }
+#nav { transition: padding .4s ease, background .4s ease, border-color .4s ease, opacity .5s ease, transform .5s ease; }
+#nav.hide { opacity: 0; pointer-events: none; transform: translateY(-12px); }
 
 /* ═══════════════════════════════════════
    HERO
@@ -1184,12 +1184,12 @@ footer {
       Open to strategic collaborations<br />and visionary projects.
     </p>
     <div class="contact-links rev d2">
-      <a href="/cdn-cgi/l/email-protection#56202f3d3d2f20243f253716313b373f3a7835393b" class="c-btn primary">
+      <a href="mailto:vykkyvrisa@gmail.com" class="c-btn primary">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <rect x="2" y="4" width="20" height="16" rx="2"/>
           <path d="m2 7 10 7 10-7"/>
         </svg>
-        <span class="__cf_email__" data-cfemail="1a6c637171636c6873697b5a7d777b737634797577">[email&#160;protected]</span>
+        vykkyvrisa@gmail.com
       </a>
       <span class="c-sep">·</span>
       <a href="https://www.linkedin.com/in/mvignesh10" target="_blank" rel="noopener" class="c-btn">
@@ -1230,24 +1230,30 @@ document.querySelectorAll('a, button').forEach(el => {
   el.addEventListener('mouseleave', () => document.body.classList.remove('hov'));
 });
 
-/* ── STICKY NAV + HIDE ON SCROLL DOWN + ACTIVE LINK ── */
+/* ── STICKY NAV + FADE ON SCROLL + ACTIVE LINK ── */
 const nav = document.getElementById('nav');
 let lastScroll = 0;
+let scrollTimer = null;
 
 window.addEventListener('scroll', () => {
   const cur = window.scrollY;
-  // Stuck style
+
+  // Stuck glass style
   nav.classList.toggle('stuck', cur > 60);
-  // Hide on scroll down, show on scroll up
-  if (cur > 120) {
-    if (cur > lastScroll + 8) {
-      nav.classList.add('hide');
-    } else if (cur < lastScroll - 8) {
+
+  // Fade out nav while scrolling, fade back in when stopped
+  if (cur > 100) {
+    nav.classList.add('hide');
+    // Clear any existing timer
+    if (scrollTimer) clearTimeout(scrollTimer);
+    // Show nav again 800ms after scrolling stops
+    scrollTimer = setTimeout(() => {
       nav.classList.remove('hide');
-    }
+    }, 800);
   } else {
     nav.classList.remove('hide');
   }
+
   lastScroll = cur;
 
   // Active nav link highlight
