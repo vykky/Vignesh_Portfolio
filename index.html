@@ -65,8 +65,9 @@ body::after {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
   padding: 32px 64px;
   display: flex; align-items: center; justify-content: space-between;
-  transition: padding .4s ease, background .4s ease, border-color .4s ease;
+  transition: padding .4s ease, background .4s ease, border-color .4s ease, opacity 0.45s ease, transform 0.45s ease;
   border-bottom: 1px solid transparent;
+  will-change: opacity, transform;
 }
 #nav.stuck {
   padding: 18px 64px;
@@ -99,8 +100,7 @@ body::after {
 }
 .nav-list a.active::after { width: 100%; }
 /* Nav fade on scroll */
-#nav { transition: padding .4s ease, background .4s ease, border-color .4s ease, opacity .5s ease, transform .5s ease; }
-#nav.hide { opacity: 0; pointer-events: none; transform: translateY(-12px); }
+#nav.hide { opacity: 0; pointer-events: none; transform: translateY(-20px); }
 
 /* ═══════════════════════════════════════
    HERO
@@ -731,94 +731,172 @@ footer {
 ═══════════════════════════════════════ */
 @media (max-width: 960px) {
   /* ── NAV MOBILE ── */
-  #nav { padding: 18px 24px; }
-  #nav.stuck { padding: 14px 24px; }
-  .nav-list { display: none; }
-  .nav-brand { font-size: 1.6rem; }
+  #nav { padding: 18px 22px; }
+  #nav.stuck { padding: 14px 22px; }
+  .nav-brand { font-size: 1.7rem; }
+
+  /* ── HAMBURGER ── */
+  .nav-burger { display: flex; }
+  #navList {
+    display: none;
+    flex-direction: column;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(7,8,13,0.98);
+    backdrop-filter: blur(24px);
+    align-items: center; justify-content: center;
+    gap: 40px; z-index: 200;
+  }
+  #navList.open { display: flex; }
+  #navList li { list-style: none; }
+  #navList a {
+    font-size: 1.15rem !important;
+    font-weight: 400 !important;
+    letter-spacing: .25em !important;
+    color: var(--plat) !important;
+    padding: 12px 0 !important;
+    text-transform: uppercase;
+  }
+  #navList a.active, #navList a:hover { color: var(--gold-hi) !important; }
+  #navList a::after { display: none !important; }
 
   /* ── HERO MOBILE ── */
   #hero { grid-template-columns: 1fr; min-height: auto; }
   .hero-vline { display: none; }
   .hero-photo-col {
-    height: auto; padding: 100px 24px 40px;
+    height: auto;
+    padding: 96px 24px 32px;
     order: -1;
     justify-content: center;
   }
-  .photo-frame { max-width: 260px; margin: 0 auto; }
+  .photo-frame { max-width: 270px; margin: 0 auto; }
   .photo-dots { display: none; }
   .photo-tag { display: none; }
   .hero-text {
-    padding: 30px 24px 80px;
+    padding: 24px 24px 80px;
     align-items: center;
     text-align: center;
   }
-  .hero-eyebrow { justify-content: center; }
-  .hero-name { font-size: clamp(3.8rem, 18vw, 5.5rem); }
+  .hero-eyebrow { justify-content: center; font-size: .68rem; font-weight: 500; }
+  .hero-name { font-size: clamp(3.5rem, 16vw, 5rem); }
   .hero-titles { justify-content: center; }
-  .hero-title-item { font-size: .72rem; font-weight: 400; letter-spacing: .14em; color: var(--plat); }
+  .hero-title-item {
+    font-size: .75rem !important;
+    font-weight: 500 !important;
+    letter-spacing: .12em !important;
+    color: var(--plat) !important;
+  }
   .wr-badge { margin: 0 auto 28px; }
-  .wr-badge-text { font-size: .65rem; font-weight: 500; }
-  .hero-tagline { font-size: 1.1rem; font-weight: 300; }
-  .hero-cta { font-size: .72rem; }
+  .wr-badge-text { font-size: .68rem; font-weight: 600; letter-spacing: .18em; }
+  .hero-tagline { font-size: 1.15rem; font-weight: 300; line-height: 1.65; }
+  .hero-cta { font-size: .75rem; font-weight: 500; letter-spacing: .18em; padding: 16px 36px; }
   .hero-scroll { left: 50%; transform: translateX(-50%); }
 
   /* ── SECTIONS MOBILE ── */
-  .s-inner { padding: 70px 24px; }
-  .s-title { font-size: clamp(1.8rem, 7vw, 2.6rem); margin-bottom: 36px; }
-  .s-chip { font-size: .62rem; }
+  .s-inner { padding: 64px 22px; }
+  .s-title {
+    font-size: clamp(1.9rem, 7.5vw, 2.8rem) !important;
+    margin-bottom: 32px;
+    font-weight: 400;
+  }
+  .s-chip { font-size: .65rem; font-weight: 600; letter-spacing: .3em; }
 
   /* ── ABOUT ── */
-  .about-layout { grid-template-columns: 1fr; gap: 44px; }
-  .about-body { font-size: 1.08rem; line-height: 1.85; font-weight: 300; }
+  .about-layout { grid-template-columns: 1fr; gap: 40px; }
+  .about-body {
+    font-size: 1.05rem !important;
+    line-height: 1.9 !important;
+    font-weight: 400 !important;
+    color: var(--plat) !important;
+  }
   .stats-grid { grid-template-columns: 1fr 1fr; gap: 3px; }
-  .stat { padding: 26px 20px; }
-  .stat-n { font-size: 2.4rem; }
-  .stat-l { font-size: .65rem; font-weight: 500; letter-spacing: .1em; }
+  .stat { padding: 28px 18px; }
+  .stat-n { font-size: 2.5rem; font-weight: 500; }
+  .stat-l { font-size: .68rem; font-weight: 600; letter-spacing: .1em; color: var(--plat-dim) !important; }
 
   /* ── MILESTONE CARDS ── */
   .m-cards { grid-template-columns: 1fr; }
-  .m-card { padding: 36px 28px; }
-  .m-card p { font-size: .95rem; line-height: 1.85; font-weight: 300; }
-  .m-tag { font-size: .62rem; font-weight: 600; letter-spacing: .18em; }
+  .m-card { padding: 36px 26px; }
+  .m-card p {
+    font-size: .98rem !important;
+    line-height: 1.9 !important;
+    font-weight: 400 !important;
+    color: var(--plat-dim) !important;
+  }
+  .m-tag { font-size: .65rem; font-weight: 700; letter-spacing: .15em; }
 
   /* ── RECORDS ── */
   .records-layout { grid-template-columns: 1fr; }
-  .rec-hero-card { grid-template-columns: 1fr; gap: 24px; padding: 36px 28px; }
+  .rec-hero-card { grid-template-columns: 1fr; gap: 24px; padding: 34px 26px; }
   .wr-big { font-size: 4rem; }
-  .rec-hero-text h3 { font-size: 1.3rem; }
-  .rec-hero-text p { font-size: .95rem; line-height: 1.85; }
-  .rec-card { padding: 32px 28px; }
-  .rec-card h3 { font-size: 1.2rem; }
-  .rec-card p { font-size: .95rem; line-height: 1.85; }
-  .rec-card-tag { font-size: .62rem; font-weight: 600; }
+  .rec-hero-text h3 { font-size: 1.35rem; font-weight: 400; }
+  .rec-hero-text p {
+    font-size: .98rem !important;
+    line-height: 1.9 !important;
+    font-weight: 400 !important;
+    color: var(--text-2) !important;
+  }
+  .rec-card { padding: 32px 26px; }
+  .rec-card h3 { font-size: 1.25rem; font-weight: 400; }
+  .rec-card p {
+    font-size: .98rem !important;
+    line-height: 1.9 !important;
+    font-weight: 400 !important;
+    color: var(--text-2) !important;
+  }
+  .rec-card-tag { font-size: .65rem; font-weight: 700; letter-spacing: .18em; }
 
   /* ── TECH ── */
   .tech-cards { grid-template-columns: 1fr; }
-  .tc { padding: 36px 28px; }
-  .tc h3 { font-size: 1.25rem; }
-  .tc p { font-size: .95rem; line-height: 1.85; }
-  .tc-pill { font-size: .62rem; font-weight: 600; }
+  .tc { padding: 34px 26px; }
+  .tc h3 { font-size: 1.25rem; font-weight: 400; }
+  .tc p {
+    font-size: .98rem !important;
+    line-height: 1.9 !important;
+    font-weight: 400 !important;
+    color: var(--text-2) !important;
+  }
+  .tc-pill { font-size: .65rem; font-weight: 700; letter-spacing: .2em; }
 
   /* ── IMPACT ── */
   .impact-layout { grid-template-columns: 1fr; gap: 40px; }
   .impact-left { position: static; }
-  .impact-pull { font-size: 1.1rem; }
-  .ii { padding: 30px 24px; }
-  .ii h3 { font-size: 1.2rem; }
-  .ii p { font-size: .95rem; line-height: 1.85; }
-  .ii-label { font-size: .62rem; font-weight: 600; }
+  .impact-pull { font-size: 1.1rem; font-weight: 400; line-height: 1.65; }
+  .ii { padding: 30px 22px; }
+  .ii h3 { font-size: 1.25rem; font-weight: 400; }
+  .ii p {
+    font-size: .98rem !important;
+    line-height: 1.9 !important;
+    font-weight: 400 !important;
+    color: var(--text-2) !important;
+  }
+  .ii-label { font-size: .65rem; font-weight: 700; letter-spacing: .22em; }
 
   /* ── CONTACT ── */
-  .contact-inner { padding: 90px 24px; }
-  .contact-headline { font-size: clamp(1.3rem, 5vw, 1.8rem); }
+  .contact-inner { padding: 90px 22px; }
+  .contact-headline {
+    font-size: clamp(1.4rem, 5.5vw, 2rem) !important;
+    font-weight: 400;
+    line-height: 1.5;
+  }
   .contact-links { flex-direction: column; gap: 14px; align-items: stretch; }
-  .c-btn { justify-content: center; font-size: .7rem; padding: 16px 24px; font-weight: 500; }
+  .c-btn {
+    justify-content: center;
+    font-size: .72rem !important;
+    padding: 18px 24px !important;
+    font-weight: 600 !important;
+    letter-spacing: .18em;
+  }
   .c-sep { display: none; }
 
   /* ── FOOTER ── */
-  footer { padding: 20px 24px; flex-direction: column; gap: 8px; text-align: center; }
+  footer {
+    padding: 20px 22px;
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
   .f-brand { font-size: 1rem; }
-  .f-copy { font-size: .65rem; }
+  .f-copy { font-size: .68rem; font-weight: 500; }
 }
 
   /* ── CUSTOM GOLD CURSOR ── */
@@ -960,7 +1038,7 @@ footer {
       </div>
       <div class="photo-tag">
         <div class="photo-tag-label">Founder</div>
-        <div class="photo-tag-value">Min Kavi</div>
+        <div class="photo-tag-value">Min-E-Kavi</div>
       </div>
     </div>
   </div>
@@ -985,7 +1063,7 @@ footer {
           A Decade of <em>Innovation<br />&amp; Global Reach</em>
         </h2>
         <p class="about-body rev d2">
-          As the Founder and Technical Lead of <strong>'Min Kavi'</strong>, I have spent the last 10 years building a comprehensive ecosystem that merges publishing, software development, and international supply chain logistics. Operating a global network that exports to over 10 countries, I specialize in transforming raw ideas into world-class digital and physical assets. My work is defined by precision, scale, and an unwavering commitment to quality.
+          As the Founder and Technical Lead of <strong>'Min-E-Kavi'</strong>, I have spent the last 10 years building a comprehensive ecosystem that merges publishing, software development, and international supply chain logistics. Operating a global network that exports to over 10 countries, I specialize in transforming raw ideas into world-class digital and physical assets. My work is defined by precision, scale, and an unwavering commitment to quality.
         </p>
       </div>
       <div class="stats-grid rev d3">
@@ -1184,13 +1262,7 @@ footer {
       Open to strategic collaborations<br />and visionary projects.
     </p>
     <div class="contact-links rev d2">
-      <a href="mailto:vykkyvrisa@gmail.com" class="c-btn primary">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="2" y="4" width="20" height="16" rx="2"/>
-          <path d="m2 7 10 7 10-7"/>
-        </svg>
-        vykkyvrisa@gmail.com
-      </a>
+      <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;vykkyvrisa&#64;gmail&#46;com" class="c-btn primary"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>&#118;&#121;&#107;&#107;&#121;&#118;&#114;&#105;&#115;&#97;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>
       <span class="c-sep">·</span>
       <a href="https://www.linkedin.com/in/mvignesh10" target="_blank" rel="noopener" class="c-btn">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -1206,66 +1278,111 @@ footer {
 
 <!-- ── FOOTER ── -->
 <footer>
-  <div class="f-brand">Vignesh M — Min Kavi</div>
-  <div class="f-copy">© 2025 · All Rights Reserved</div>
+  <div class="f-brand">Vignesh M — Min-E-Kavi</div>
+  <div class="f-copy">© 2026 · All Rights Reserved</div>
 </footer>
 
 <!-- ══════════════════════════════════════
      JAVASCRIPT
 ══════════════════════════════════════ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js">
+/* ── HAMBURGER MENU ── */
+(function() {
+  var burgerBtn = document.getElementById('navBurger');
+  var navListEl = document.getElementById('navList');
+  if (!burgerBtn || !navListEl) return;
 
+  burgerBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var isOpen = navListEl.classList.contains('open');
+    if (isOpen) {
+      navListEl.classList.remove('open');
+      burgerBtn.classList.remove('open');
+    } else {
+      navListEl.classList.add('open');
+      burgerBtn.classList.add('open');
+    }
+  });
 
-// Ring follows with smooth lag
-(function loop() {
-  rx += (mx - rx) * .12;
-  ry += (my - ry) * .12;
-  cRing.style.left = rx + 'px';
-  cRing.style.top  = ry + 'px';
-  requestAnimationFrame(loop);
+  // Close on nav link click
+  navListEl.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      navListEl.classList.remove('open');
+      burgerBtn.classList.remove('open');
+    });
+  });
+
+  // Close on outside click
+  document.addEventListener('click', function(e) {
+    if (navListEl.classList.contains('open') && !navListEl.contains(e.target) && !burgerBtn.contains(e.target)) {
+      navListEl.classList.remove('open');
+      burgerBtn.classList.remove('open');
+    }
+  });
 })();
+</script><script>
 
-document.querySelectorAll('a, button').forEach(el => {
-  el.addEventListener('mouseenter', () => document.body.classList.add('hov'));
-  el.addEventListener('mouseleave', () => document.body.classList.remove('hov'));
-});
+
+
+
+
 
 /* ── STICKY NAV + FADE ON SCROLL + ACTIVE LINK ── */
-const nav = document.getElementById('nav');
-let lastScroll = 0;
-let scrollTimer = null;
+var navEl = document.getElementById('nav');
+var fadeTimer = null;
 
-window.addEventListener('scroll', () => {
-  const cur = window.scrollY;
+function showNav() {
+  navEl.style.opacity = '1';
+  navEl.style.transform = 'translateY(0)';
+  navEl.style.pointerEvents = 'auto';
+}
 
-  // Stuck glass style
-  nav.classList.toggle('stuck', cur > 60);
+function hideNav() {
+  var navListEl = document.getElementById('navList');
+  if (navListEl && navListEl.classList.contains('open')) return;
+  navEl.style.opacity = '0';
+  navEl.style.transform = 'translateY(-20px)';
+  navEl.style.pointerEvents = 'none';
+}
 
-  // Fade out nav while scrolling, fade back in when stopped
-  if (cur > 100) {
-    nav.classList.add('hide');
-    // Clear any existing timer
-    if (scrollTimer) clearTimeout(scrollTimer);
-    // Show nav again 800ms after scrolling stops
-    scrollTimer = setTimeout(() => {
-      nav.classList.remove('hide');
-    }, 800);
+window.addEventListener('scroll', function() {
+  var cur = window.scrollY;
+
+  // Sticky glass style
+  if (cur > 60) {
+    navEl.classList.add('stuck');
   } else {
-    nav.classList.remove('hide');
+    navEl.classList.remove('stuck');
   }
 
-  lastScroll = cur;
+  // Fade out while scrolling
+  if (cur > 80) {
+    hideNav();
+    if (fadeTimer) clearTimeout(fadeTimer);
+    fadeTimer = setTimeout(function() {
+      showNav();
+    }, 1000);
+  } else {
+    if (fadeTimer) clearTimeout(fadeTimer);
+    showNav();
+  }
 
-  // Active nav link highlight
-  const sections = document.querySelectorAll('section[id]');
-  let current = '';
-  sections.forEach(sec => {
-    if (window.scrollY >= sec.offsetTop - 120) current = sec.getAttribute('id');
+  // Active nav highlight
+  var sections = document.querySelectorAll('section[id]');
+  var current = '';
+  sections.forEach(function(sec) {
+    if (window.scrollY >= sec.offsetTop - 130) {
+      current = sec.getAttribute('id');
+    }
   });
-  document.querySelectorAll('.nav-list a').forEach(a => {
-    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  document.querySelectorAll('.nav-list a').forEach(function(a) {
+    if (a.getAttribute('href') === '#' + current) {
+      a.classList.add('active');
+    } else {
+      a.classList.remove('active');
+    }
   });
-}, {passive:true});
+}, {passive: true});
 
 /* ── SCROLL REVEAL ── */
 const revEls = document.querySelectorAll('.rev');
@@ -1285,14 +1402,4 @@ window.addEventListener('scroll', () => {
 }, {passive:true});
 
 /* ── PHOTO LOAD CHECK ── */
-const heroPhoto = document.getElementById('hero-photo');
-const photoPh   = document.getElementById('photo-ph');
-if (heroPhoto && heroPhoto.src && heroPhoto.src !== window.location.href) {
-  heroPhoto.onload  = () => { heroPhoto.style.display='block'; photoPh.style.display='none'; };
-  heroPhoto.onerror = () => { heroPhoto.style.display='none';  photoPh.style.display='flex'; };
-  if (heroPhoto.complete && heroPhoto.naturalWidth) {
-    heroPhoto.style.display='block'; photoPh.style.display='none';
-  }
-}
-
-/* ── 3D CARD TILT ── *
+const heroPhoto = document.getElementById('hero-p
